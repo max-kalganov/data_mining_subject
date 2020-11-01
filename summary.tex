@@ -1,0 +1,592 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={Отчет по предмету Интеллектуальный анализ данных},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Отчет по предмету Интеллектуальный анализ данных}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ux437ux430ux434ux430ux43dux438ux435-1}{%
+\subsection{Задание 1}\label{ux437ux430ux434ux430ux43dux438ux435-1}}
+
+\emph{Калганов Максим}
+
+\hypertarget{ux430ux43bux433ux43eux440ux438ux442ux43c-partition}{%
+\subsubsection{Алгоритм
+Partition}\label{ux430ux43bux433ux43eux440ux438ux442ux43c-partition}}
+
+\hypertarget{ux43eux43fux438ux441ux430ux43dux438ux435-ux430ux43bux433ux43eux440ux438ux442ux43cux430}{%
+\paragraph{Описание
+алгоритма:}\label{ux43eux43fux438ux441ux430ux43dux438ux435-ux430ux43bux433ux43eux440ux438ux442ux43cux430}}
+
+Алгоритмами Partition называется множество алгоритмов, задачей которых
+является кластеризация. Основным алгоритмом Partition является алгоритм
+k-средних. Остальные алгоритмы являются его расширением.
+
+\textbf{Математическое описание алгоритма}:
+
+\emph{Дано}:\\
+- набор из n наблюдений \(X=\{x_1,x_2,...,x_n\},x_i∈R^d, i=1,...,n;\)\\
+- k - требуемое число кластеров, \(k∈N, k≤n\).
+
+\emph{Требуется}:\\
+Разделить множество наблюдений \(X\) на \(k\) кластеров
+\(S_1,S_2,...,S_k\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(S_i∩S_j=∅,i≠j\)
+\item
+  \(⋃^k_{i=1}S_i=X\)
+\end{itemize}
+
+\emph{Действие алгоритма}:\\
+Алгоритм k-means разбивает набор \(X\) на \(k\) наборов
+\(S_1,S_2,...,S_k\), таким образом, чтобы минимизировать сумму квадратов
+расстояний от каждой точки кластера до его центра (центр масс кластера).
+Введем обозначение, \(S=\{S_1,S_2,...,S_k\}\).\\
+Тогда действие алгоритма k-means равносильно поиску:
+
+\[argmin_S \sum_{i=1}^k  \sum_{{x} \in {S_i}} ρ(x,μ_i)^2, \space (1)\]
+где \(μ_i\) -- центры кластеров, \(i=1,...,k\), \(ρ(x,μ_i)\) -- функция
+расстояния между \(x\) и \(μ_i\)
+
+\emph{Шаги алгоритма}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Начальный шаг: инициализация кластеров\\
+  Выбирается произвольное множество точек \(μ_i, i=1,...,k\),
+  рассматриваемых как начальные центры кластеров: \(μ^{(0)}_i=μ_i\),
+  \(i=1,...,k\)
+\item
+  Распределение векторов по кластерам\\
+  Шаг \(t:∀x_i∈X, i=1,...,n:x_i∈S_j⟺j=argmin_kρ(x_i,μ^{(t−1)}_k)^2\)
+\item
+  Пересчет центров кластеров\\
+  Шаг \(t:∀i=1,...,k:μ^{(t)}_i=\frac{1}{|S_i|} \sum_{x∈S_i}x\)
+\item
+  Проверка условия останова: Если \(∃i∈1,..,.k:μ^{(t)}_i≠μ^{(t−1)}_i\)
+  тогда
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  \(t=t+1\);
+\item
+  перейти на шаг 2; иначе остановится
+\end{itemize}
+
+\hypertarget{ux440ux435ux430ux43bux438ux437ux430ux446ux438ux44f}{%
+\paragraph{Реализация:}\label{ux440ux435ux430ux43bux438ux437ux430ux446ux438ux44f}}
+
+\hypertarget{ux444ux443ux43dux43aux446ux438ux43eux43dux430ux43b}{%
+\subparagraph{\texorpdfstring{\textbf{Функционал}}{Функционал}}\label{ux444ux443ux43dux43aux446ux438ux43eux43dux430ux43b}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{clusterize <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(matr, clusters)\{}
+\NormalTok{  diff_c1 <-}\StringTok{ }\KeywordTok{sweep}\NormalTok{(matr[, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, clusters[}\DecValTok{1}\NormalTok{]) }
+\NormalTok{  diff_c2 <-}\StringTok{ }\KeywordTok{sweep}\NormalTok{(matr[, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{], }\DecValTok{2}\NormalTok{, clusters[}\DecValTok{2}\NormalTok{]) }
+  
+\NormalTok{  dist_c1 <-}\StringTok{ }\KeywordTok{rowSums}\NormalTok{(diff_c1 }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{  dist_c2 <-}\StringTok{ }\KeywordTok{rowSums}\NormalTok{(diff_c2 }\OperatorTok{^}\StringTok{ }\DecValTok{2}\NormalTok{)}
+  
+\NormalTok{  matr[, }\DecValTok{3}\NormalTok{] <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(dist_c1 }\OperatorTok{<}\StringTok{ }\NormalTok{dist_c2, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+  \KeywordTok{return}\NormalTok{(matr)}
+\NormalTok{\}}
+
+\NormalTok{get_new_clusters <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(matr)\{}
+\NormalTok{  cluster1 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(matr, matr[, }\DecValTok{3}\NormalTok{] }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{)}
+\NormalTok{  cluster2 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(matr, matr[, }\DecValTok{3}\NormalTok{] }\OperatorTok{==}\StringTok{ }\DecValTok{3}\NormalTok{)}
+  
+\NormalTok{  new_cluster1 <-}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(cluster1)[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
+\NormalTok{  new_cluster2 <-}\StringTok{ }\KeywordTok{colMeans}\NormalTok{(cluster2)[}\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
+  
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(new_cluster1, new_cluster2))}
+\NormalTok{\}}
+
+\NormalTok{init_clusters <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(matr)\{}
+\NormalTok{  centroids_ids =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{80}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+  
+\NormalTok{  c1 <-}\StringTok{ }\NormalTok{data_matrix[centroids_ids[}\DecValTok{1}\NormalTok{], }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
+\NormalTok{  c2 <-}\StringTok{ }\NormalTok{data_matrix[centroids_ids[}\DecValTok{2}\NormalTok{], }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{]}
+  \KeywordTok{return}\NormalTok{(}\KeywordTok{rbind}\NormalTok{(c1, c2))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\newpage
+
+\hypertarget{ux434ux430ux43dux43dux44bux435}{%
+\subparagraph{\texorpdfstring{\textbf{Данные}}{Данные}}\label{ux434ux430ux43dux43dux44bux435}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{data_matrix <-}\StringTok{ }\KeywordTok{cbind}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{1}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{),}
+                       \KeywordTok{rnorm}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{10}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{)),}
+                     \KeywordTok{c}\NormalTok{(}\KeywordTok{rnorm}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{1}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{),}
+                       \KeywordTok{rnorm}\NormalTok{(}\DecValTok{40}\NormalTok{, }\DataTypeTok{mean =} \DecValTok{10}\NormalTok{, }\DataTypeTok{sd =} \DecValTok{1}\NormalTok{)),}
+                     \KeywordTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{80}\NormalTok{))}
+\KeywordTok{colnames}\NormalTok{(data_matrix) <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"x"}\NormalTok{, }\StringTok{"y"}\NormalTok{, }\StringTok{"col"}\NormalTok{)}
+
+\KeywordTok{plot}\NormalTok{(data_matrix, }\DataTypeTok{col=}\NormalTok{data_matrix[, }\DecValTok{3}\NormalTok{], }\DataTypeTok{pch=}\DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{summary_files/figure-latex/unnamed-chunk-1-1.pdf}
+
+\newpage
+
+\hypertarget{ux448ux430ux433ux438-ux430ux43bux433ux43eux440ux438ux442ux43cux430}{%
+\subparagraph{\texorpdfstring{\textbf{Шаги
+алгоритма}}{Шаги алгоритма}}\label{ux448ux430ux433ux438-ux430ux43bux433ux43eux440ux438ux442ux43cux430}}
+
+Первое приближение:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clusters <-}\StringTok{ }\KeywordTok{init_clusters}\NormalTok{(data_matrix)}
+\NormalTok{data_matrix <-}\StringTok{ }\KeywordTok{clusterize}\NormalTok{(data_matrix, clusters)}
+\NormalTok{new_clusters <-}\StringTok{ }\KeywordTok{get_new_clusters}\NormalTok{(data_matrix)}
+\KeywordTok{plot}\NormalTok{(data_matrix, }\DataTypeTok{col=}\NormalTok{data_matrix[, }\DecValTok{3}\NormalTok{], }\DataTypeTok{pch=}\DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{summary_files/figure-latex/unnamed-chunk-2-1.pdf}
+
+После сходимости метода:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{while}\NormalTok{ (}\KeywordTok{any}\NormalTok{(clusters }\OperatorTok{!=}\StringTok{ }\NormalTok{new_clusters))\{}
+\NormalTok{  clusters =}\StringTok{ }\NormalTok{new_clusters}
+\NormalTok{  data_matrix <-}\StringTok{ }\KeywordTok{clusterize}\NormalTok{(data_matrix, clusters)}
+\NormalTok{  new_clusters <-}\StringTok{ }\KeywordTok{get_new_clusters}\NormalTok{(data_matrix)}
+\NormalTok{\}}
+
+\KeywordTok{plot}\NormalTok{(data_matrix, }\DataTypeTok{col=}\NormalTok{data_matrix[, }\DecValTok{3}\NormalTok{], }\DataTypeTok{pch=}\DecValTok{19}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{summary_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\hypertarget{ux430ux43bux433ux43eux440ux438ux442ux43c-apriori}{%
+\subsubsection{Алгоритм
+Apriori}\label{ux430ux43bux433ux43eux440ux438ux442ux43c-apriori}}
+
+\hypertarget{ux43eux43fux438ux441ux430ux43dux438ux435-ux430ux43bux433ux43eux440ux438ux442ux43cux430-1}{%
+\paragraph{Описание
+алгоритма:}\label{ux43eux43fux438ux441ux430ux43dux438ux435-ux430ux43bux433ux43eux440ux438ux442ux43cux430-1}}
+
+Алгоритм Apriori ищет ассоциативные правила и применяется по отношению к
+базам данных, содержащим огромное количество транзакций.
+
+\hypertarget{ux448ux430ux433ux438}{%
+\paragraph{Шаги}\label{ux448ux430ux433ux438}}
+
+Алгоритм Apriori состоит из трех шагов:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Объединение. Просмотр базы данных и определение частоты вхождения
+  отдельных товаров.
+\item
+  Отсечение. Те наборы, которые удовлетворяют поддержке и достоверности,
+  переходят на следующую итерацию с двухкомпонентными наборами,
+\item
+  Повторение. Предыдущие два шага повторяются для каждой величины
+  набора, пока не будет повторно получен ранее определенный размер.
+\end{enumerate}
+
+\hypertarget{ux434ux430ux43dux43dux44bux435-1}{%
+\paragraph{Данные}\label{ux434ux430ux43dux43dux44bux435-1}}
+
+Для проверки того, что алгоритм работает правильно, данные были взяты из
+задания 2.1
+
+\begin{verbatim}
+Ф, А, К, У, Л
+И, Н, Ф, О, Р, М
+К, А, Л, Н, О
+М, А, К, И
+
+minsup = 40% 
+minconf = 40%
+\end{verbatim}
+
+\hypertarget{ux440ux435ux430ux43bux438ux437ux430ux446ux438ux44f-1}{%
+\paragraph{Реализация}\label{ux440ux435ux430ux43bux438ux437ux430ux446ux438ux44f-1}}
+
+\begin{verbatim}
+import sys
+
+from itertools import chain, combinations
+from collections import defaultdict
+from optparse import OptionParser
+from typing import Iterable
+
+
+def subsets(arr):
+    return chain(*[combinations(arr, i + 1) for i, a in enumerate(arr)])
+
+
+def return_items_with_min_support(item_set, transaction_list, min_support, freq_set):
+    _item_set = set()
+    local_set = defaultdict(int)
+    for item in item_set:
+        for transaction in transaction_list:
+            if item.issubset(transaction):
+                freq_set[item] += 1
+                local_set[item] += 1
+
+    for item, count in local_set.items():
+        support = float(count) / len(transaction_list)
+        if support >= min_support:
+            _item_set.add(item)
+
+    return _item_set
+
+
+def join_set(item_set: Iterable, length: int):
+    return set([i.union(j) for i in item_set for j in item_set if len(i.union(j)) == length])
+
+
+def get_item_set_transaction_list(data_iterator: Iterable):
+    transaction_list = list()
+    item_set = set()
+    for record in data_iterator:
+        transaction = frozenset(record)
+        transaction_list.append(transaction)
+        for item in transaction:
+            item_set.add(frozenset([item]))  # Generate 1-itemSets
+    return item_set, transaction_list
+
+
+def get_support(item, freq_set, transaction_list):
+    return float(freq_set[item]) / len(transaction_list)
+
+
+def run_apriori(data: Iterable, min_support: float, min_confidence: float):
+    item_set, transaction_list = get_item_set_transaction_list(data)
+    freq_set = defaultdict(int)
+    large_set = dict()
+    one_c_set = return_items_with_min_support(item_set, transaction_list, min_support, freq_set)
+    current_l_set = one_c_set
+    k = 2
+    while current_l_set:
+        large_set[k - 1] = current_l_set
+        current_l_set = join_set(current_l_set, k)
+        current_c_set = return_items_with_min_support(current_l_set, transaction_list, min_support, freq_set)
+        current_l_set = current_c_set
+        k = k + 1
+
+    to_ret_items = []
+    for key, value in large_set.items():
+        to_ret_items.extend([(tuple(item), get_support(item, freq_set, transaction_list))
+                             for item in value])
+
+    to_ret_rules = []
+    for key, value in list(large_set.items())[1:]:
+        for item in value:
+            _subsets = map(frozenset, [x for x in subsets(item)])
+            for element in _subsets:
+                remain = item.difference(element)
+                if len(remain) > 0:
+                    confidence = get_support(item, freq_set, transaction_list) / get_support(element,
+                                                                                             freq_set,
+                                                                                             transaction_list)
+                    if confidence >= min_confidence:
+                        to_ret_rules.append(((tuple(element), tuple(remain)),
+                                             confidence))
+    return to_ret_items, to_ret_rules
+
+
+def print_results(items, rules):
+    for item, support in sorted(items, key=lambda x: x[1]):
+        print(f"item - {item}, support - {support}")
+    print()
+    for rule, confidence in sorted(rules, key=lambda x: x[1]):
+        pre, post = rule
+        print(f"rule - {pre} -> {post}, confidence - {confidence}")
+\end{verbatim}
+
+\hypertarget{ux440ux435ux437ux443ux43bux44cux442ux430ux442-ux440ux430ux431ux43eux442ux44b}{%
+\subparagraph{Результат
+работы}\label{ux440ux435ux437ux443ux43bux44cux442ux430ux442-ux440ux430ux431ux43eux442ux44b}}
+
+\begin{verbatim}
+item - ('Ф',), support - 0.5
+item - ('О',), support - 0.5
+item - ('Н',), support - 0.5
+item - ('Л',), support - 0.5
+item - ('И',), support - 0.5
+item - ('М',), support - 0.5
+item - ('Л', 'К'), support - 0.5
+item - ('Л', 'А'), support - 0.5
+item - ('Н', 'О'), support - 0.5
+item - ('И', 'М'), support - 0.5
+item - ('Л', 'А', 'К'), support - 0.5
+item - ('А',), support - 0.75
+item - ('К',), support - 0.75
+item - ('А', 'К'), support - 0.75
+
+rule - ('К',) -> ('Л',), confidence - 0.6666666666666666
+rule - ('А',) -> ('Л',), confidence - 0.6666666666666666
+rule - ('А',) -> ('Л', 'К'), confidence - 0.6666666666666666
+rule - ('К',) -> ('Л', 'А'), confidence - 0.6666666666666666
+rule - ('А', 'К') -> ('Л',), confidence - 0.6666666666666666
+rule - ('Л',) -> ('К',), confidence - 1.0
+rule - ('Л',) -> ('А',), confidence - 1.0
+rule - ('А',) -> ('К',), confidence - 1.0
+rule - ('К',) -> ('А',), confidence - 1.0
+rule - ('Н',) -> ('О',), confidence - 1.0
+rule - ('О',) -> ('Н',), confidence - 1.0
+rule - ('И',) -> ('М',), confidence - 1.0
+rule - ('М',) -> ('И',), confidence - 1.0
+rule - ('Л',) -> ('А', 'К'), confidence - 1.0
+rule - ('Л', 'А') -> ('К',), confidence - 1.0
+rule - ('Л', 'К') -> ('А',), confidence - 1.0
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\newpage
+
+\hypertarget{ux437ux430ux434ux430ux43dux438ux435-2}{%
+\subsection{Задание 2}\label{ux437ux430ux434ux430ux43dux438ux435-2}}
+
+\hypertarget{apriori}{%
+\subsubsection{1. Apriori}\label{apriori}}
+
+Найти сильные бинарные ассоциативные правила, т.е. правила для которых
+\(sup>=minsup,\ conf>=minconf\)
+
+Данные
+
+\begin{verbatim}
+Ф, А, К, У, Л
+И, Н, Ф, О, Р, М
+К, А, Л, Н, О
+М, А, К, И
+
+minsup = 40%
+minconf = 40%
+\end{verbatim}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+F1 & sup & C1\tabularnewline
+\midrule
+\endhead
+Ф & 2/4 & Ф\tabularnewline
+А & 3/4 & А\tabularnewline
+К & 3/4 & К\tabularnewline
+У & 1/4 & --\tabularnewline
+Л & 2/4 & Л\tabularnewline
+И & 2/4 & И\tabularnewline
+Н & 2/4 & Н\tabularnewline
+О & 2/4 & О\tabularnewline
+Р & 1/4 & --\tabularnewline
+М & 2/4 & М\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+F2 & sup & C2\tabularnewline
+\midrule
+\endhead
+ФА & 1/4 & --\tabularnewline
+ФК & 1/4 & --\tabularnewline
+ФЛ & 1/4 & --\tabularnewline
+ФИ & 1/4 & --\tabularnewline
+ФН & 1/4 & --\tabularnewline
+ФО & 1/4 & --\tabularnewline
+ФМ & 1/4 & --\tabularnewline
+АК & 2/4 & АК\tabularnewline
+АЛ & 2/4 & АЛ\tabularnewline
+АИ & 1/4 & --\tabularnewline
+АН & 1/4 & --\tabularnewline
+АО & 1/4 & --\tabularnewline
+АМ & 1/4 & --\tabularnewline
+КЛ & 2/4 & КЛ\tabularnewline
+КИ & 1/4 & --\tabularnewline
+КН & 1/4 & --\tabularnewline
+КО & 1/4 & --\tabularnewline
+КМ & 1/4 & --\tabularnewline
+ЛИ & 0/4 & --\tabularnewline
+ЛН & 1/4 & --\tabularnewline
+ЛО & 1/4 & --\tabularnewline
+ЛМ & 0/4 & --\tabularnewline
+ИН & 1/4 & --\tabularnewline
+ИО & 1/4 & --\tabularnewline
+ИМ & 2/4 & ИМ\tabularnewline
+НО & 2/4 & НО\tabularnewline
+НМ & 1/4 & --\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+F3 & sup & C3\tabularnewline
+\midrule
+\endhead
+АКЛ & 2/4 & АКЛ\tabularnewline
+\bottomrule
+\end{longtable}
+
+Результаты сходятся с ответом программы.
+
+\hypertarget{ux43aux43eux441ux438ux43dux443ux441ux43dux430ux44f-ux43cux435ux440ux430}{%
+\subsubsection{2. Косинусная
+мера}\label{ux43aux43eux441ux438ux43dux443ux441ux43dux430ux44f-ux43cux435ux440ux430}}
+
+Пусть даны \(x=(14, 12)\) и \(y=(19,97)\). Определить расстояние между
+векторами \(D(x,y)\), используя косинусную меру.
+
+\hypertarget{ux440ux435ux448ux435ux43dux438ux435}{%
+\paragraph{Решение}\label{ux440ux435ux448ux435ux43dux438ux435}}
+
+\[ 
+D(x,y) = \frac{\sum_{i} x_i*y_i}{\sqrt{\sum_{i}x_i^2} * \sqrt{\sum_{i}y_i^2}} = \frac{14*19 + 12*97}{\sqrt{14^2 + 12^2} + \sqrt{19^2 + 97^2}} = 12.192792857454535
+\]
+
+\hypertarget{lcs}{%
+\subsubsection{3. LCS}\label{lcs}}
+
+Пусть даны \(x=(К,А,Г,Н,О,В)\) и \(y=(А,К,С,И,М)\). Вычислить расстояние
+\(D(x,y)\) между последовательностями \(x\) и \(y\), используя меру LCS
+(longest common suvsequence).
+
+\hypertarget{ux440ux435ux448ux435ux43dux438ux435-1}{%
+\paragraph{Решение}\label{ux440ux435ux448ux435ux43dux438ux435-1}}
+
+\(|LCS(x,y)|=1\)
+
+\[
+D(x,y) = |x| + |y| - 2|LCS(x,y)| = 6 + 5 - 2*1 = 9
+\]
+
+\end{document}

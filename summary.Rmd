@@ -1,0 +1,383 @@
+---
+title: "Отчет по предмету Интеллектуальный анализ данных"
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+***
+## Задание 1
+*Калганов Максим*
+
+### Алгоритм Partition
+#### Описание алгоритма:
+
+Алгоритмами Partition называется множество алгоритмов, задачей которых является кластеризация.
+Основным алгоритмом Partition является алгоритм k-средних. Остальные алгоритмы являются его расширением. 
+
+**Математическое описание алгоритма**:  
+  
+*Дано*:  
+- набор из n наблюдений $X=\{x_1,x_2,...,x_n\},x_i∈R^d, i=1,...,n;$  
+- k - требуемое число кластеров, $k∈N, k≤n$.  
+  
+*Требуется*:  
+Разделить множество наблюдений $X$ на $k$ кластеров $S_1,S_2,...,S_k$:  
+
+- $S_i∩S_j=∅,i≠j$
+- $⋃^k_{i=1}S_i=X$  
+  
+*Действие алгоритма*:  
+Алгоритм k-means разбивает набор $X$ на $k$ наборов $S_1,S_2,...,S_k$, таким образом, чтобы минимизировать сумму квадратов расстояний от каждой точки кластера до его центра (центр масс кластера). Введем обозначение, $S=\{S_1,S_2,...,S_k\}$.   
+Тогда действие алгоритма k-means равносильно поиску:    
+  
+$$argmin_S \sum_{i=1}^k  \sum_{{x} \in {S_i}} ρ(x,μ_i)^2, \space (1)$$
+где $μ_i$ – центры кластеров, $i=1,...,k$,  $ρ(x,μ_i)$ – функция расстояния между $x$ и $μ_i$  
+  
+*Шаги алгоритма*:  
+  
+1. Начальный шаг: инициализация кластеров  
+Выбирается произвольное множество точек $μ_i, i=1,...,k$, рассматриваемых как начальные центры кластеров: $μ^{(0)}_i=μ_i$, $i=1,...,k$
+
+2. Распределение векторов по кластерам  
+Шаг $t:∀x_i∈X, i=1,...,n:x_i∈S_j⟺j=argmin_kρ(x_i,μ^{(t−1)}_k)^2$  
+
+3. Пересчет центров кластеров  
+Шаг $t:∀i=1,...,k:μ^{(t)}_i=\frac{1}{|S_i|} \sum_{x∈S_i}x$
+
+4. Проверка условия останова:
+Если $∃i∈1,..,.k:μ^{(t)}_i≠μ^{(t−1)}_i$ тогда
+- $t=t+1$;
+- перейти на шаг 2;
+иначе остановится  
+  
+<br />
+<br />
+<br />
+<br />
+
+#### Реализация:
+##### **Функционал**
+```{r setup}
+library(ggplot2)
+
+clusterize <- function(matr, clusters){
+  diff_c1 <- sweep(matr[, 1:2], 2, clusters[1]) 
+  diff_c2 <- sweep(matr[, 1:2], 2, clusters[2]) 
+  
+  dist_c1 <- rowSums(diff_c1 ^ 2)
+  dist_c2 <- rowSums(diff_c2 ^ 2)
+  
+  matr[, 3] <- ifelse(dist_c1 < dist_c2, 2, 3)
+  return(matr)
+}
+
+get_new_clusters <- function(matr){
+  cluster1 <- subset(matr, matr[, 3] == 2)
+  cluster2 <- subset(matr, matr[, 3] == 3)
+  
+  new_cluster1 <- colMeans(cluster1)[1:2]
+  new_cluster2 <- colMeans(cluster2)[1:2]
+  
+  return(rbind(new_cluster1, new_cluster2))
+}
+
+init_clusters <- function(matr){
+  centroids_ids = sample(1:80, 2)
+  
+  c1 <- data_matrix[centroids_ids[1], 1:2]
+  c2 <- data_matrix[centroids_ids[2], 1:2]
+  return(rbind(c1, c2))
+}
+
+```
+
+\newpage
+##### **Данные**
+```{r}
+set.seed(10)
+data_matrix <- cbind(c(rnorm(40, mean = 1, sd = 1),
+                       rnorm(40, mean = 10, sd = 1)),
+                     c(rnorm(40, mean = 1, sd = 1),
+                       rnorm(40, mean = 10, sd = 1)),
+                     rep(1, 80))
+colnames(data_matrix) <- c("x", "y", "col")
+
+plot(data_matrix, col=data_matrix[, 3], pch=19)
+
+```
+
+\newpage
+##### **Шаги алгоритма**
+Первое приближение:
+```{r}
+clusters <- init_clusters(data_matrix)
+data_matrix <- clusterize(data_matrix, clusters)
+new_clusters <- get_new_clusters(data_matrix)
+plot(data_matrix, col=data_matrix[, 3], pch=19)
+```
+
+После сходимости метода:
+```{r}
+while (any(clusters != new_clusters)){
+  clusters = new_clusters
+  data_matrix <- clusterize(data_matrix, clusters)
+  new_clusters <- get_new_clusters(data_matrix)
+}
+
+plot(data_matrix, col=data_matrix[, 3], pch=19)
+```
+
+### Алгоритм Apriori
+#### Описание алгоритма:
+Алгоритм Apriori ищет ассоциативные правила и применяется по отношению к базам данных, содержащим огромное количество транзакций.
+
+#### Шаги 
+Алгоритм Apriori состоит из трех шагов:
+
+1. Объединение. Просмотр базы данных и определение частоты вхождения отдельных товаров.
+2. Отсечение. Те наборы, которые удовлетворяют поддержке и достоверности, переходят на следующую итерацию с двухкомпонентными наборами,
+3. Повторение. Предыдущие два шага повторяются для каждой величины набора, пока не будет повторно получен ранее определенный размер.
+
+#### Данные
+Для проверки того, что алгоритм работает правильно, данные были взяты из задания 2.1
+
+```
+Ф, А, К, У, Л
+И, Н, Ф, О, Р, М
+К, А, Л, Н, О
+М, А, К, И
+
+minsup = 40% 
+minconf = 40%
+```
+
+#### Реализация
+```
+import sys
+
+from itertools import chain, combinations
+from collections import defaultdict
+from optparse import OptionParser
+from typing import Iterable
+
+
+def subsets(arr):
+    return chain(*[combinations(arr, i + 1) for i, a in enumerate(arr)])
+
+
+def return_items_with_min_support(item_set, transaction_list, min_support, freq_set):
+    _item_set = set()
+    local_set = defaultdict(int)
+    for item in item_set:
+        for transaction in transaction_list:
+            if item.issubset(transaction):
+                freq_set[item] += 1
+                local_set[item] += 1
+
+    for item, count in local_set.items():
+        support = float(count) / len(transaction_list)
+        if support >= min_support:
+            _item_set.add(item)
+
+    return _item_set
+
+
+def join_set(item_set: Iterable, length: int):
+    return set([i.union(j) for i in item_set for j in item_set if len(i.union(j)) == length])
+
+
+def get_item_set_transaction_list(data_iterator: Iterable):
+    transaction_list = list()
+    item_set = set()
+    for record in data_iterator:
+        transaction = frozenset(record)
+        transaction_list.append(transaction)
+        for item in transaction:
+            item_set.add(frozenset([item]))  # Generate 1-itemSets
+    return item_set, transaction_list
+
+
+def get_support(item, freq_set, transaction_list):
+    return float(freq_set[item]) / len(transaction_list)
+
+
+def run_apriori(data: Iterable, min_support: float, min_confidence: float):
+    item_set, transaction_list = get_item_set_transaction_list(data)
+    freq_set = defaultdict(int)
+    large_set = dict()
+    one_c_set = return_items_with_min_support(item_set, transaction_list, min_support, freq_set)
+    current_l_set = one_c_set
+    k = 2
+    while current_l_set:
+        large_set[k - 1] = current_l_set
+        current_l_set = join_set(current_l_set, k)
+        current_c_set = return_items_with_min_support(current_l_set, transaction_list, min_support, freq_set)
+        current_l_set = current_c_set
+        k = k + 1
+
+    to_ret_items = []
+    for key, value in large_set.items():
+        to_ret_items.extend([(tuple(item), get_support(item, freq_set, transaction_list))
+                             for item in value])
+
+    to_ret_rules = []
+    for key, value in list(large_set.items())[1:]:
+        for item in value:
+            _subsets = map(frozenset, [x for x in subsets(item)])
+            for element in _subsets:
+                remain = item.difference(element)
+                if len(remain) > 0:
+                    confidence = get_support(item, freq_set, transaction_list) / get_support(element,
+                                                                                             freq_set,
+                                                                                             transaction_list)
+                    if confidence >= min_confidence:
+                        to_ret_rules.append(((tuple(element), tuple(remain)),
+                                             confidence))
+    return to_ret_items, to_ret_rules
+
+
+def print_results(items, rules):
+    for item, support in sorted(items, key=lambda x: x[1]):
+        print(f"item - {item}, support - {support}")
+    print()
+    for rule, confidence in sorted(rules, key=lambda x: x[1]):
+        pre, post = rule
+        print(f"rule - {pre} -> {post}, confidence - {confidence}")
+```
+
+##### Результат работы
+```
+item - ('Ф',), support - 0.5
+item - ('О',), support - 0.5
+item - ('Н',), support - 0.5
+item - ('Л',), support - 0.5
+item - ('И',), support - 0.5
+item - ('М',), support - 0.5
+item - ('Л', 'К'), support - 0.5
+item - ('Л', 'А'), support - 0.5
+item - ('Н', 'О'), support - 0.5
+item - ('И', 'М'), support - 0.5
+item - ('Л', 'А', 'К'), support - 0.5
+item - ('А',), support - 0.75
+item - ('К',), support - 0.75
+item - ('А', 'К'), support - 0.75
+
+rule - ('К',) -> ('Л',), confidence - 0.6666666666666666
+rule - ('А',) -> ('Л',), confidence - 0.6666666666666666
+rule - ('А',) -> ('Л', 'К'), confidence - 0.6666666666666666
+rule - ('К',) -> ('Л', 'А'), confidence - 0.6666666666666666
+rule - ('А', 'К') -> ('Л',), confidence - 0.6666666666666666
+rule - ('Л',) -> ('К',), confidence - 1.0
+rule - ('Л',) -> ('А',), confidence - 1.0
+rule - ('А',) -> ('К',), confidence - 1.0
+rule - ('К',) -> ('А',), confidence - 1.0
+rule - ('Н',) -> ('О',), confidence - 1.0
+rule - ('О',) -> ('Н',), confidence - 1.0
+rule - ('И',) -> ('М',), confidence - 1.0
+rule - ('М',) -> ('И',), confidence - 1.0
+rule - ('Л',) -> ('А', 'К'), confidence - 1.0
+rule - ('Л', 'А') -> ('К',), confidence - 1.0
+rule - ('Л', 'К') -> ('А',), confidence - 1.0
+```
+---
+
+\newpage
+## Задание 2
+
+### 1. Apriori
+Найти сильные бинарные ассоциативные правила, т.е. правила для которых
+$sup>=minsup,\ conf>=minconf$ 
+
+Данные 
+```
+Ф, А, К, У, Л
+И, Н, Ф, О, Р, М
+К, А, Л, Н, О
+М, А, К, И
+
+minsup = 40%
+minconf = 40%
+
+```
+
+F1|sup|C1
+--|--|--
+Ф|2/4|Ф
+А|3/4|А
+К|3/4|К
+У|1/4|--
+Л|2/4|Л
+И|2/4|И
+Н|2/4|Н
+О|2/4|О
+Р|1/4|--
+М|2/4|М
+
+---
+
+F2|sup|C2
+--|--|--
+ФА|1/4|--
+ФК|1/4|--
+ФЛ|1/4|--
+ФИ|1/4|--
+ФН|1/4|--
+ФО|1/4|--
+ФМ|1/4|--
+АК|2/4|АК
+АЛ|2/4|АЛ
+АИ|1/4|--
+АН|1/4|--
+АО|1/4|--
+АМ|1/4|--
+КЛ|2/4|КЛ
+КИ|1/4|--
+КН|1/4|--
+КО|1/4|--
+КМ|1/4|--
+ЛИ|0/4|--
+ЛН|1/4|--
+ЛО|1/4|--
+ЛМ|0/4|--
+ИН|1/4|--
+ИО|1/4|--
+ИМ|2/4|ИМ
+НО|2/4|НО
+НМ|1/4|--
+
+---
+
+F3|sup|C3
+--|--|--
+АКЛ|2/4|АКЛ
+
+
+Результаты сходятся с ответом программы.
+
+### 2. Косинусная мера
+Пусть даны $x=(14, 12)$ и $y=(19,97)$. 
+Определить расстояние между векторами $D(x,y)$, используя косинусную меру.
+
+#### Решение 
+
+$$ 
+D(x,y) = \frac{\sum_{i} x_i*y_i}{\sqrt{\sum_{i}x_i^2} * \sqrt{\sum_{i}y_i^2}} = \frac{14*19 + 12*97}{\sqrt{14^2 + 12^2} + \sqrt{19^2 + 97^2}} = 12.192792857454535
+$$
+
+
+### 3. LCS
+Пусть даны $x=(К,А,Г,Н,О,В)$ и $y=(А,К,С,И,М)$. 
+Вычислить расстояние $D(x,y)$ между последовательностями $x$ и $y$, 
+используя меру LCS (longest common suvsequence). 
+
+#### Решение 
+
+$|LCS(x,y)|=1$
+
+$$
+D(x,y) = |x| + |y| - 2|LCS(x,y)| = 6 + 5 - 2*1 = 9
+$$
+
+
+
